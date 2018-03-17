@@ -1,0 +1,48 @@
+#ifndef RNG_H
+#define RNG_H
+
+#include "offsets.h"
+
+class Rng
+{
+    public:
+        unsigned int Rand(unsigned int vals)
+        {
+            seed = seed * 0x15A4E35 + 1;
+            uint32_t ret = (seed >> 0x10) & 0x7fff;
+            if (vals > 0x8000)
+            {
+                ret |= Rand(0x8000) << 15;
+                if (vals > 0x40000000)
+                {
+                    ret |= Rand(0x4) << 30;
+                }
+            }
+            return ret % vals;
+        }
+
+        uint32_t seed;
+};
+
+inline int Rand(int rng_id)
+{
+    if (!*bw::use_rng)
+        return 0;
+    uint32_t seed = *bw::rng_seed * 0x15A4E35 + 1;
+    *bw::rng_seed = seed;
+    return (seed >> 0x10) & 0x7fff;
+}
+
+inline bool EnableRng(bool enable)
+{
+    bool prev = *bw::use_rng;
+    *bw::use_rng = enable;
+    return prev;
+}
+
+inline Rng *MainRng()
+{
+    return (Rng *)bw::rng_seed.raw_pointer();
+}
+
+#endif /* RNG_H */
