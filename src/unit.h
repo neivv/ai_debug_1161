@@ -4,7 +4,6 @@
 #include "dat.h"
 #include "types.h"
 #include "list.h"
-#include "unitlist.h"
 #include "offsets.h"
 #include "sprite.h"
 #include "unit_type.h"
