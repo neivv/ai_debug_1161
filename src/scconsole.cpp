@@ -116,6 +116,11 @@ ScConsole::ScConsole()
     AddCommand("show", &ScConsole::Show);
     AddCommand("grid", &ScConsole::Cmd_Grid);
     AddCommand("spawn", &ScConsole::Spawn);
+
+    AddCommand("sai", &ScConsole::ShowAi);
+    AddCommand("saip", &ScConsole::ShowAiPlayer);
+    AddCommand("saig", &ScConsole::ShowAiGuards);
+    AddCommand("saiu", &ScConsole::ShowAiUnits);
 }
 
 ScConsole::~ScConsole()
@@ -675,10 +680,14 @@ void ScConsole::DrawAiInfo(uint8_t *textbuf, uint8_t *framebuf, xuint w, yuint h
             }
         }
         char str[128];
-        auto &ai_data = bw::player_ai[i];
-        snprintf(str, sizeof str, "Player %d: money %d / %d - need %d / %d / %d - available %d / %d / %d", i,
-                bw::minerals[i], bw::gas[i], ai_data.mineral_need, ai_data.gas_need, ai_data.supply_need,
-                ai_data.minerals_available, ai_data.gas_available, ai_data.supply_available);
+        const auto &ai_data = bw::player_ai[i];
+        snprintf(
+            str, sizeof str,
+            "Player %d: money %d / %d - need %d / %d / %d - available %d / %d / %d",
+            i, bw::minerals[i], bw::gas[i],
+            ai_data.mineral_need, ai_data.gas_need, ai_data.supply_need,
+            ai_data.minerals_available, ai_data.gas_available, ai_data.supply_available
+        );
         text_surface.DrawText(&font, str, info_pos, 0x55);
         info_pos += Point32(0, 10);
         snprintf(str, sizeof str, "Request count %d, training unit %d, Script count %d",
@@ -1127,6 +1136,49 @@ void ScConsole::DrawDebugInfo(uint8_t *framebuf, xuint w, yuint h)
             }
         }
     }
+}
+
+bool ScConsole::ShowAi(const CmdArgs &args)
+{
+    draw_ai_towns = !draw_ai_towns;
+    draw_ai_data = !draw_ai_data;
+    return true;
+}
+
+bool ScConsole::ShowAiGuards(const CmdArgs &args)
+{
+    draw_ai_guards = !draw_ai_guards;
+    draw_ai_towns = true;
+    draw_ai_data = true;
+    return true;
+}
+
+bool ScConsole::ShowAiUnits(const CmdArgs &args)
+{
+    draw_ai_unit_homes = !draw_ai_unit_homes;
+    return true;
+}
+
+bool ScConsole::ShowAiPlayer(const CmdArgs &args)
+{
+    if (std::string(args[1]) == "all")
+    {
+        for (int i = 0; i < Limits::Players; i++)
+            show_ai[i] = 1;
+    }
+    else
+    {
+        int player = atoi(args[1]);
+        if (IsActivePlayer(player))
+        {
+            for (int i = 0; i < Limits::Players; i++)
+                show_ai[i] = 0;
+            show_ai[player] = 2;
+        }
+    }
+    draw_ai_towns = true;
+    draw_ai_data = true;
+    return true;
 }
 
 bool ScConsole::Show(const CmdArgs &args)

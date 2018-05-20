@@ -57,6 +57,11 @@ class ScConsole : public Common::GenericConsole
         bool Spawn(const CmdArgs &args);
         bool AiscriptExec(const CmdArgs &args);
 
+        bool ShowAi(const CmdArgs &args);
+        bool ShowAiUnits(const CmdArgs &args);
+        bool ShowAiGuards(const CmdArgs &args);
+        bool ShowAiPlayer(const CmdArgs &args);
+
         bool Death(const CmdArgs &args, bool print, bool clear);
 
         vector<UnitType> ParseUnitId(const char *unit_str, int max_amt);
