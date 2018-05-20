@@ -602,6 +602,9 @@ void ScConsole::DrawAiRegions(int player, Common::Surface *text_surf, const Poin
         snprintf(buf, sizeof buf, "State %x target %x", region->state, region->target_region_id);
         text_surf->DrawText(&font, buf, draw_pos, 0x55);
         draw_pos += Point32(0, 10);
+        snprintf(buf, sizeof buf, "Defense priority %d", region->defense_priority);
+        text_surf->DrawText(&font, buf, draw_pos, 0x55);
+        draw_pos += Point32(0, 10);
         snprintf(buf, sizeof buf, "Need %d/%d, Current %d/%d",
                 region->needed_ground_strength, region->needed_air_strength,
                 region->local_ground_strength, region->local_air_strength);

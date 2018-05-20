@@ -136,7 +136,8 @@ namespace Ai
         uint16_t target_region_id;
         uint8_t player; // 0x4
         uint8_t state;
-        uint16_t unk6;
+        uint8_t defense_priority;
+        uint8_t unk7;
         uint16_t flags; // 0x8
         uint16_t ground_unit_count;
         uint16_t needed_ground_strength;
