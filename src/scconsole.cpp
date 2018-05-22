@@ -986,6 +986,8 @@ void ScConsole::DrawOrders(uint8_t *framebuf, xuint w, yuint h)
         {
             if (unit->target)
                 surface.DrawLine(unit->target->sprite->position - screen_pos, unit->sprite->position - screen_pos, 0xa4);
+            else if (unit->order_target_pos != Point16(0, 0))
+                surface.DrawLine(unit->order_target_pos - screen_pos, unit->sprite->position - screen_pos, 0xa4);
         }
     }
     else if (draw_orders == OrderDrawMode::Selected)
@@ -994,6 +996,8 @@ void ScConsole::DrawOrders(uint8_t *framebuf, xuint w, yuint h)
         {
             if (unit->target)
                 surface.DrawLine(unit->target->sprite->position - screen_pos, unit->sprite->position - screen_pos, 0xa4);
+            else if (unit->order_target_pos != Point16(0, 0))
+                surface.DrawLine(unit->order_target_pos - screen_pos, unit->sprite->position - screen_pos, 0xa4);
         }
     }
 }

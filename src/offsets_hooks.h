@@ -33,6 +33,7 @@ namespace bw
     const Stdcall<void()> DrawScreen = 0x0041E280;
     const Stdcall<int(int, Rect32 *, uint8_t **, int *, int)> SDrawLockSurface = 0x00411E4E;
     const Stdcall<int(int, uint8_t *, int, int)> SDrawUnlockSurface = 0x00411E48;
+    const Stdcall<void()> WaitTimesSet = 0x004DECB5;
 }
 
 

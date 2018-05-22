@@ -7,6 +7,14 @@
 
 Common::PatchManager *patch_mgr;
 
+void ResetGameSpeedWaits()
+{
+    for (int i = 0; i < 7; i++)
+    {
+        bw::wait_times_msec[i] = 42;
+    }
+}
+
 void PatchDraw(Common::PatchContext *patch)
 {
     patch->Hook(bw::SDrawLockSurface, SDrawLockSurface_Hook);
@@ -17,6 +25,7 @@ void PatchDraw(Common::PatchContext *patch)
 
 void RemoveLimits(Common::PatchContext *patch)
 {
+    patch->CallHook(bw::WaitTimesSet, ResetGameSpeedWaits);
     if (UseConsole)
     {
         patch->Hook(bw::GenerateFog, GenerateFog);

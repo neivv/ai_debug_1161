@@ -614,6 +614,8 @@ namespace bw
     // other related data
     const array_offset<char, 0xc00> validation_replay_path = 0x00628668;
 
+    const array_offset<uint32_t, 0x7> wait_times_msec = 0x005124D8;
+
     namespace base
     {
         const uintptr_t starcraft = 0x00400000;
