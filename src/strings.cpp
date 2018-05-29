@@ -2,10 +2,9 @@
 
 const char *Tbl::GetTblString(int index) const
 {
-    index--;
-    if (index >= entries)
-        return "";
+    if (index == 0 || index > entries)
+        return "(No string)";
 
-    uint16_t offset = *(&first_offset + index);
+    uint16_t offset = *(&first_offset + index - 1);
     return ((const char *)&entries) + offset;
 }
