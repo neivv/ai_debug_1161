@@ -106,6 +106,7 @@ class ScConsole : public Common::GenericConsole
         bool draw_ai_named;
         bool draw_ai_unit_homes;
         bool draw_ai_guards;
+        bool draw_ai_regions;
         int show_ai[Limits::Players]; // 0 no, 1 yes, 2 extra
         bool draw_coords;
         bool draw_range;

@@ -93,6 +93,7 @@ ScConsole::ScConsole()
     draw_ai_named = true;
     draw_ai_unit_homes = false;
     draw_ai_guards = false;
+    draw_ai_regions = false;
     for (int i = 0; i < Limits::Players; i++)
         show_ai[i] = 1;
     draw_coords = false;
@@ -766,7 +767,7 @@ void ScConsole::DrawAiInfo(uint8_t *textbuf, uint8_t *framebuf, xuint w, yuint h
                 str = "";
             }
         }
-        if (show_ai[i] == 2)
+        if (show_ai[i] == 2 && draw_ai_regions)
         {
             DrawAiRegions(i, &text_surface, region_text_pos);
             region_text_pos += Point32(0, 30);
@@ -1272,6 +1273,10 @@ bool ScConsole::Show(const CmdArgs &args)
         else if (more == "guards")
         {
             draw_ai_guards = !draw_ai_guards;
+        }
+        else if (more == "regions")
+        {
+            draw_ai_regions = !draw_ai_regions;
         }
         else if (more == "")
         {
