@@ -694,8 +694,15 @@ void ScConsole::DrawAiInfo(uint8_t *textbuf, uint8_t *framebuf, xuint w, yuint h
         );
         text_surface.DrawText(&font, str, info_pos, 0x55);
         info_pos += Point32(0, 10);
-        snprintf(str, sizeof str, "Request count %d, training unit %d, Script count %d",
-                ai_data.request_count, ai_data.wanted_unit, CountScripts(i));
+        if (ai_data.wanted_unit != 0) {
+            // Tbl strings are offset by one which cancels the wanted_unit 0 = None
+            auto name = (*bw::stat_txt_tbl)->GetTblString(ai_data.wanted_unit);
+            snprintf(str, sizeof str, "Request count %d, training unit %s, Script count %d",
+                    ai_data.request_count, name, CountScripts(i));
+        } else {
+            snprintf(str, sizeof str, "Request count %d, training nothing, Script count %d",
+                    ai_data.request_count, CountScripts(i));
+        }
         text_surface.DrawText(&font, str, info_pos, 0x55);
         info_pos += Point32(0, 10);
         if (ai_data.attack_grouping_region != 0)
